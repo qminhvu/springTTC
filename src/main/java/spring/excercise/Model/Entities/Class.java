@@ -1,4 +1,6 @@
 package spring.excercise.Model.Entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Class {
     private String name;
 
     @OneToMany(mappedBy = "aClass")
+    @JsonIgnore
     private List<Student> students;
 
     public List<Student> getStudents() {

@@ -25,8 +25,8 @@ public class ClassController {
     }
 
     @GetMapping("/{id}")
-    public Class readOne(@PathVariable("id") int id) {
-        return service.readByID(id);
+    public List<Student> readOne(@PathVariable("id") int id) {
+        return (List<Student>) service.readByID(id);
     }
 
     @PutMapping("/{id}")
@@ -35,7 +35,7 @@ public class ClassController {
     }
 
     @PostMapping
-    public Class create(@RequestBody ClassCreate classCreate) {
+    public Class create(@RequestBody ClassCreate classCreate) throws Exception {
         return service.create(classCreate);
     }
 

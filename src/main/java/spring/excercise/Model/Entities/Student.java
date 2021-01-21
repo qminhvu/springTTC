@@ -18,7 +18,6 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    @JsonIgnore
     private Class aClass;
 
     public Student() {
