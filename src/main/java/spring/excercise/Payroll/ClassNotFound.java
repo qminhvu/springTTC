@@ -1,4 +1,4 @@
-package Payroll;
+package spring.excercise.Payroll;
 
 public class ClassNotFound extends RuntimeException {
     public ClassNotFound(int id) {
