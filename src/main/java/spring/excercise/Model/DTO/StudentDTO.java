@@ -2,16 +2,18 @@ package spring.excercise.Model.DTO;
 
 import spring.excercise.Model.Entities.Class;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-public class StudentCreate {
+public class StudentDTO {
     private String name;
-    private Date birthday;
+    private LocalDate birthday;
     private String address;
     private String phoneNumber;
     private Class aClass;
 
-    public StudentCreate() {
+    public StudentDTO(){
+
     }
 
     public Class getaClass() {
@@ -30,11 +32,11 @@ public class StudentCreate {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

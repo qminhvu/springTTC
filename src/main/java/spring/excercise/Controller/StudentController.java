@@ -2,7 +2,7 @@ package spring.excercise.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import spring.excercise.Model.DTO.StudentCreate;
+import spring.excercise.Model.DTO.StudentDTO;
 import spring.excercise.Model.Entities.Student;
 import spring.excercise.Service.StudentService;
 
@@ -31,13 +31,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student create(@RequestBody StudentCreate studentCreate) throws Exception {
-        return service.create(studentCreate);
+    public Student create(@RequestBody StudentDTO studentDTO) throws Exception {
+        return service.create(studentDTO);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable int id) {
-        return service.delete(id);
+    public void delete(@PathVariable int id) {
+        service.delete(id);
     }
 
 }

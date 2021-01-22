@@ -1,9 +1,9 @@
 package spring.excercise.Model.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Student {
@@ -12,7 +12,7 @@ public class Student {
     private int id;
 
     private String name;
-    private Date birthday;
+    private LocalDate birthday;
     private String address;
     private String phoneNumber;
 
@@ -39,11 +39,11 @@ public class Student {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

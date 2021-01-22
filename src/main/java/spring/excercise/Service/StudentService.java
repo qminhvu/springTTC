@@ -4,16 +4,19 @@ package spring.excercise.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import spring.excercise.Model.DTO.StudentCreate;
 
+import spring.excercise.Exceptions.ClassNotFoundException;
+import spring.excercise.Exceptions.NotNullException;
+import spring.excercise.Exceptions.StudentNotFoundException;
+import spring.excercise.Model.DTO.StudentDTO;
 import spring.excercise.Model.Entities.Class;
 import spring.excercise.Model.Entities.Student;
-import spring.excercise.Payroll.ClassNotFound;
-import spring.excercise.Payroll.StudentNotFound;
 import spring.excercise.repositories.ClassRepo;
 import spring.excercise.repositories.StudentRepo;
 
+
 import java.util.List;
+
 
 
 @Service
@@ -30,22 +33,29 @@ public class StudentService {
 
     public Student readByID(int id) {
         return studentRepo.findById(id)
-                .orElseThrow(() -> new StudentNotFound(id));
+                .orElseThrow(() -> new StudentNotFoundException(id));
     }
 
-    public Student create(StudentCreate studentCreate) throws Exception {
+    public Student create(StudentDTO studentDTO) {
         Student student = new Student();
-        Class aClass = classRepo.findById(studentCreate.getaClass().getId()).orElseThrow(() -> new ClassNotFound(studentCreate.getaClass().getId()));
-        student.setName(studentCreate.getName());
-        student.setBirthday(studentCreate.getBirthday());
-        student.setAddress(studentCreate.getAddress());
-        student.setPhoneNumber(studentCreate.getPhoneNumber());
+        Class aClass = classRepo.findById(studentDTO.getaClass().getId())
+                .orElseThrow(() -> new ClassNotFoundException(studentDTO.getaClass().getId()));
+        student.setName(studentDTO.getName());
+        student.setAddress(studentDTO.getAddress());
+        student.setBirthday(studentDTO.getBirthday());
+        student.setPhoneNumber(studentDTO.getPhoneNumber());
         student.setaClass(aClass);
+        if(student.getName().equals("")
+        || student.getAddress().equals("")
+        || student.getPhoneNumber().equals("")){
+            throw new NotNullException();
+        }
         return studentRepo.save(student);
     }
 
     public Student replaceStudent(Student newStudent, int id) {
-        Class aClass = classRepo.findById(newStudent.getaClass().getId()).orElseThrow(() -> new ClassNotFound(newStudent.getaClass().getId()));
+        Class aClass = classRepo.findById(newStudent.getaClass().getId())
+                        .orElseThrow(() -> new ClassNotFoundException(newStudent.getaClass().getId()));
         return studentRepo.findById(id)
                 .map(student -> {
                     student.setName(newStudent.getName());
@@ -53,6 +63,11 @@ public class StudentService {
                     student.setBirthday(newStudent.getBirthday());
                     student.setPhoneNumber(newStudent.getPhoneNumber());
                     student.setaClass(aClass);
+                    if(student.getName().equals("")
+                            || student.getAddress().equals("")
+                            || student.getPhoneNumber().equals("")){
+                        throw new NotNullException();
+                    }
                     return studentRepo.save(student);
                 })
                 .orElseGet(() -> {
@@ -61,11 +76,8 @@ public class StudentService {
                 });
     }
 
-    public String delete(int id) {
-        Student student = studentRepo.findById(id).orElse(null);
-        if(student == null) return "Fail";
-        studentRepo.delete(student);
-        return "Success";
+    public void delete(int id) {
+        studentRepo.deleteById(id);
     }
 
 

@@ -17,6 +17,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    implementation 'org.mapstruct:mapstruct-jdk8:1.4.1.Final'
+    //testCompile('org.mapstruct:mapstruct-jdk8:1.4.1.Final')
+
+
     //Use MySQL Connector-J
     implementation 'mysql:mysql-connector-java'
     implementation 'org.projectlombok:lombok:1.18.16'

@@ -2,13 +2,10 @@ package spring.excercise.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import spring.excercise.Model.DTO.ClassCreate;
-
+import spring.excercise.Model.DTO.ClassDTO;
 import spring.excercise.Model.Entities.Class;
-
 import spring.excercise.Model.Entities.Student;
 import spring.excercise.Service.ClassService;
-import spring.excercise.repositories.StudentRepo;
 
 
 import java.util.List;
@@ -25,8 +22,13 @@ public class ClassController {
     }
 
     @GetMapping("/{id}")
-    public List<Student> readOne(@PathVariable("id") int id) {
-        return (List<Student>) service.readByID(id);
+    public Class readOne(@PathVariable("id") int id) {
+        return service.readByID(id);
+    }
+
+    @GetMapping("/{id}/students")
+    public List<Student> readStudentList(@PathVariable("id") int id) {
+        return service.getStudents(id);
     }
 
     @PutMapping("/{id}")
@@ -35,12 +37,12 @@ public class ClassController {
     }
 
     @PostMapping
-    public Class create(@RequestBody ClassCreate classCreate) throws Exception {
-        return service.create(classCreate);
+    public Class create(@RequestBody ClassDTO classDTO) {
+        return service.create(classDTO);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        return service.delete(id);
+    public void delete(@PathVariable("id") int id) {
+        service.delete(id);
     }
 }

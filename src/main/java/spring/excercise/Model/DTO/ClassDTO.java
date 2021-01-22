@@ -4,7 +4,7 @@ import spring.excercise.Model.Entities.Student;
 
 import java.util.List;
 
-public class ClassCreate {
+public class ClassDTO {
     private String name;
     private List<Student> students;
 
