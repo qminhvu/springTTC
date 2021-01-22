@@ -8,33 +8,38 @@ import spring.excercise.Exceptions.StudentNotFoundException;
 import spring.excercise.Model.DTO.ClassDTO;
 import spring.excercise.Model.Entities.Class;
 import spring.excercise.Model.Entities.Student;
+import spring.excercise.Service.IService.IClassService;
 import spring.excercise.Service.Mapper.ClassMapper;
-import spring.excercise.repositories.ClassRepo;
-import spring.excercise.repositories.StudentRepo;
+import spring.excercise.Repositories.ClassRepo;
+import spring.excercise.Repositories.StudentRepo;
 
 import java.util.List;
 
 @Service
-public class ClassService {
+public class ClassService implements IClassService {
     @Autowired
     private ClassRepo classRepo;
 
     @Autowired
     private StudentRepo studentRepo;
 
+    @Override
     public List<Class> read() {
         return classRepo.findAll();
     }
 
+    @Override
     public Class readByID(int id) {
         return classRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
     }
 
+    @Override
     public List<Student> getStudents(int id) {
         return studentRepo.getStudentsBy(id);
     }
 
+    @Override
     public Class create(ClassDTO classDTO) {
         ClassMapper classMapper = new ClassMapper();
         List<Class> classes = classRepo.findAll();
@@ -51,6 +56,7 @@ public class ClassService {
         return classRepo.save(classEntity);
     }
 
+    @Override
     public Class replaceClass(Class newClass, int id) {
         List<Class> classes = classRepo.findAll();
         return classRepo.findById(id)
@@ -72,6 +78,7 @@ public class ClassService {
                 });
     }
 
+    @Override
     public void delete(int id) {
         classRepo.deleteById(id);
     }
